@@ -1,12 +1,13 @@
 
 package ru.bukreev.cryptoprototype.model.poloniex;
 
-import com.fasterxml.jackson.annotation.*;
+import org.codehaus.jackson.annotate.*;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 @JsonPropertyOrder({
     "id",
     "last",
