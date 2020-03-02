@@ -1,12 +1,14 @@
 package ru.bukreev.cryptoprototype.services;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import ru.bukreev.cryptoprototype.model.poloniex.PoloniexTickers;
 
+import javax.ws.rs.core.MediaType;
 import java.util.Set;
 
 @Service
@@ -24,12 +26,15 @@ public class PoloniexClient {
     }
 
     public final Set<String> getPrices() {
-        Client client = Client.create();
+        final DefaultClientConfig config = new DefaultClientConfig();
+        config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+        Client client = Client.create(config);
 
-        PoloniexTickers response = client.resource(apiAddress).accept("application/json").get(PoloniexTickers.class);
+        ClientResponse response = client.resource(apiAddress).accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
-        if (response != null) {
-            System.out.println(response);
+        if (response.getStatus() == 200) {
+            PoloniexTickers entity = response.getEntity(PoloniexTickers.class);
+            System.out.println(entity);
         } else {
             System.out.println("oops");
         }
