@@ -9,15 +9,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CryptoprototypeConfig {
 
-    @Value("${key.api.binance}")
+    @Value("${binance.api.key}")
     private String apiKey;
 
-    @Value("${key.secret.binance}")
+    @Value("${binance.api.secret}")
     private String secretKey;
 
     @Bean
-    public BinanceApiRestClient binanceClient() {
-        final BinanceApiClientFactory binanceApiClientFactory = new BinanceApiClientFactory(apiKey, secretKey);
+    public BinanceApiRestClient binanceApiRestClient() {
+        final BinanceApiClientFactory binanceApiClientFactory = BinanceApiClientFactory.newInstance(apiKey, secretKey);
         return binanceApiClientFactory.newRestClient();
     }
 }

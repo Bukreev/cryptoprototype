@@ -13,7 +13,6 @@ import ru.bukreev.cryptoprototype.model.poloniex.BTCETH;
 import ru.bukreev.cryptoprototype.model.poloniex.PoloniexTickers;
 
 import javax.ws.rs.core.MediaType;
-import java.util.Set;
 
 @Service
 public class PoloniexClient {
@@ -36,7 +35,7 @@ public class PoloniexClient {
         return false;
     }
 
-    public final Set<String> getPrices() {
+    public final void getPrices() {
         final DefaultClientConfig config = new DefaultClientConfig();
         config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
@@ -59,6 +58,5 @@ public class PoloniexClient {
         } else {
             System.out.println("oops");
         }
-        return null;
     }
 }
